@@ -49,7 +49,10 @@ class _TaskItemState extends State<TaskItem>{
 
             const SizedBox(width: 10),
 
-            Text(widget.task.name),
+            Text(
+              widget.task.name,
+              style: Theme.of(context).textTheme.bodyLarge
+            ),
             
             const Spacer(),
 

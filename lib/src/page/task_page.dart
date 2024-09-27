@@ -120,9 +120,16 @@ class _TaskPageState extends State<TaskPage>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
-            const Text('Название'),
+            Text(
+                'Название',
+                style: Theme.of(context).textTheme.titleMedium
+            ),
+
+            const SizedBox(height: 10),
+
             TextField(
               controller: _nameController,
+              style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
 
@@ -139,7 +146,9 @@ class _TaskPageState extends State<TaskPage>{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(DateFormat('dd.MM.yyyy').format(_date)),
+                Text(
+                  DateFormat('dd.MM.yyyy').format(_date),
+                  style: Theme.of(context).textTheme.bodyLarge),
                 IconButton(
                     onPressed: _dialogUpdateDate,
                     icon: const Icon(Icons.calendar_month)
