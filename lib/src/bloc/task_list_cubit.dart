@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stasks/src/DTO/TaskDTO.dart';
 
 import '../entity/task.dart';
 import '../repository/task_repository.dart';
@@ -17,6 +18,12 @@ class TaskListCubit extends Cubit<TaskListState>{
 
   updateTask(Task newTask){
     repository.updateTask(newTask);
+    List<Task> list = repository.getTasksByDay(state.selectedDay);
+    emit(TaskListState(selectedDay: state.selectedDay, list: list));
+  }
+
+  createTask(TaskDTO newTask){
+    repository.createTask(newTask);
     List<Task> list = repository.getTasksByDay(state.selectedDay);
     emit(TaskListState(selectedDay: state.selectedDay, list: list));
   }

@@ -1,3 +1,4 @@
+import 'package:stasks/src/DTO/TaskDTO.dart';
 import 'package:stasks/src/repository/task_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -29,5 +30,17 @@ class MockTaskRepository implements TaskRepository{
     if(index == -1) throw Exception('No such task');
 
     tasks[index] = newTask;
+  }
+
+  @override
+  void createTask(TaskDTO newTaskDTO) {
+    Task newTask = Task(
+        tasks.length,
+        newTaskDTO.date,
+        newTaskDTO.name,
+        newTaskDTO.description,
+        false
+    );
+    tasks.add(newTask);
   }
 }

@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:stasks/src/DTO/TaskDTO.dart';
 import 'package:stasks/src/bloc/task_list_cubit.dart';
-import 'package:stasks/src/widget/edit_task_page/date_alert_dialog.dart';
 
 import '../entity/task.dart';
+import '../widget/task_page/date_alert_dialog.dart';
 
-class EditTaskPage extends StatefulWidget{
-  final Task task;
+class TaskPage extends StatefulWidget{
+  final Task? task;
+  final PageMode mode;
+  final DateTime? date;
 
-  const EditTaskPage({super.key, required this.task});
+  const TaskPage({super.key, this.task, this.date, required this.mode});
 
   @override
-  State<StatefulWidget> createState() => _EditTaskPageState();
+  State<StatefulWidget> createState() => _TaskPageState();
 }
 
-class _EditTaskPageState extends State<EditTaskPage>{
+class _TaskPageState extends State<TaskPage>{
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -34,8 +37,8 @@ class _EditTaskPageState extends State<EditTaskPage>{
     }
   }
 
-  void _acceptChanges(){
-    Task newTask = widget.task.copyWith(
+  void _editTask(){
+    Task newTask = widget.task!.copyWith(
       name: _nameController.text,
       description: _descriptionController.text,
       date: _date
@@ -46,12 +49,41 @@ class _EditTaskPageState extends State<EditTaskPage>{
     Navigator.of(context).pop();
   }
 
+  void _createTask(){
+    TaskDTO newTask = TaskDTO(
+        name: _nameController.text,
+        description: _descriptionController.text,
+        date: _date
+    );
+    BlocProvider.of<TaskListCubit>(context).createTask(newTask);
+
+    Navigator.of(context).pop();
+  }
+
+    void _onAcceptPressed(){
+    if(widget.mode == PageMode.edit){
+      _editTask();
+    }
+    else if(widget.mode == PageMode.add){
+      _createTask();
+    }
+    else{
+      throw Exception('Unexpected PageMode');
+    }
+  }
+
   @override
   void initState(){
     super.initState();
-    _date = widget.task.date;
-    _nameController.text = widget.task.name;
-    _descriptionController.text = widget.task.description;
+
+    if(widget.mode == PageMode.edit){
+      _date = widget.task!.date;
+      _nameController.text = widget.task!.name;
+      _descriptionController.text = widget.task!.description;
+    }
+    else if(widget.mode == PageMode.add){
+      _date = widget.date ?? DateTime.now();
+    }
   }
 
   @override
@@ -102,13 +134,17 @@ class _EditTaskPageState extends State<EditTaskPage>{
             const Spacer(),
 
             TextButton(
-              onPressed: _acceptChanges,
-              child: const Text('Изменить'),
+              onPressed: _onAcceptPressed,
+              child: const Text('Подтвердить'),
             )
           ],
         ),
       ),
     );
   }
+}
 
+enum PageMode{
+  add,
+  edit
 }

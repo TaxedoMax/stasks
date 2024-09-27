@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stasks/src/bloc/task_list_cubit.dart';
-import 'package:stasks/src/page/edit_task_page.dart';
+import 'package:stasks/src/page/task_page.dart';
 
 import '../../entity/task.dart';
 
@@ -29,7 +29,7 @@ class _TaskItemState extends State<TaskItem>{
         MaterialPageRoute(builder: (context) =>
             BlocProvider.value(
                 value: bloc,
-                child: EditTaskPage(task: widget.task)
+                child: TaskPage(mode: PageMode.edit, task: widget.task)
             )
         )
     );

@@ -23,24 +23,19 @@ class _TaskListState extends State<TaskListWidget>{
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TaskListCubit>(
-        create: (BuildContext context) => TaskListCubit(MockTaskRepository())
-          ..loadByDay(BlocProvider.of<CalendarCubit>(context).state.selectedDay),
+    return BlocListener<CalendarCubit, CalendarState>(
+        listener: _calendarListener,
 
-        child: BlocListener<CalendarCubit, CalendarState>(
-            listener: _calendarListener,
-
-            child: BlocBuilder<TaskListCubit, TaskListState>(
-              builder: (context, taskListState) {
-                return ListView.builder(
-                    padding: const EdgeInsets.all(10),
-                    itemCount: taskListState.list.length,
-                    itemBuilder: (BuildContext context, int index){
-                      return TaskItem(task: taskListState.list[index]);
-                    }
-                );
-              }
-            )
+        child: BlocBuilder<TaskListCubit, TaskListState>(
+          builder: (context, taskListState) {
+            return ListView.builder(
+                padding: const EdgeInsets.all(10),
+                itemCount: taskListState.list.length,
+                itemBuilder: (BuildContext context, int index){
+                  return TaskItem(task: taskListState.list[index]);
+                }
+            );
+          }
         )
     );
   }
