@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stasks/src/page/task_page.dart';
 import 'package:stasks/src/repository/mock_task_repository.dart';
+import 'package:stasks/src/repository/task_repository_impl.dart';
 import 'package:stasks/src/widget/global/calendar_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -19,7 +20,7 @@ class MainPage extends StatefulWidget{
 
 class _MainPageState extends State<MainPage>{
 
-  void _createPage(BuildContext context){
+  void _openCreatePage(BuildContext context){
     CalendarCubit calendarCubit = BlocProvider.of<CalendarCubit>(context);
     TaskListCubit taskCubit = BlocProvider.of<TaskListCubit>(context);
 
@@ -52,7 +53,7 @@ class _MainPageState extends State<MainPage>{
 
             BlocProvider<TaskListCubit>(
               create: (BuildContext context) =>
-                TaskListCubit(MockTaskRepository())
+                TaskListCubit(TaskRepositoryImpl())
                   ..loadByDay(context.read<CalendarCubit>().state.focusedDay)
             )
           ],
@@ -70,7 +71,8 @@ class _MainPageState extends State<MainPage>{
                       right: 0,
                       bottom: 0,
                       child: IconButton(
-                          onPressed: () => _createPage(context),
+                          onPressed: () => _openCreatePage(context),
+                          iconSize: 50,
                           icon: const Icon(Icons.add_circle)
                       )
                   );

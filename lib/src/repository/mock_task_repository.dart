@@ -24,7 +24,7 @@ class MockTaskRepository implements TaskRepository{
   }
 
   @override
-  void updateTask(Task newTask) {
+  Future<void> updateTask(Task newTask) async {
     int index = tasks.indexWhere((task) => task.id == newTask.id);
 
     if(index == -1) throw Exception('No such task');
@@ -33,7 +33,7 @@ class MockTaskRepository implements TaskRepository{
   }
 
   @override
-  void createTask(TaskDTO newTaskDTO) {
+  Future<void> createTask(TaskDTO newTaskDTO) async {
     Task newTask = Task(
         tasks.length,
         newTaskDTO.date,
@@ -45,7 +45,7 @@ class MockTaskRepository implements TaskRepository{
   }
 
   @override
-  void deleteTaskById(int id) {
+  Future<void> deleteTaskById(int id) async {
     tasks.removeWhere((element) => element.id == id);
   }
 }

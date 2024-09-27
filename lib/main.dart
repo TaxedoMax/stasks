@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:stasks/src/entity/task.dart';
 import 'package:stasks/src/page/main_page.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter<Task>(TaskAdapter());
+  await Hive.openBox<Task>('box_for_task');
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 

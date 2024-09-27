@@ -4,7 +4,7 @@ import '../entity/task.dart';
 
 abstract class TaskRepository{
   List<Task> getTasksByDay(DateTime day);
-  void updateTask(Task newTask);
-  void createTask(TaskDTO newTask);
-  void deleteTaskById(int id);
+  Future<void> updateTask(Task newTask);
+  Future<void> createTask(TaskDTO newTask);
+  Future<void> deleteTaskById(int id);
 }

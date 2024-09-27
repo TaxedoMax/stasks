@@ -16,18 +16,18 @@ class TaskListCubit extends Cubit<TaskListState>{
     emit(TaskListState(selectedDay: day, list: list));
   }
 
-  updateTask(Task newTask){
-    repository.updateTask(newTask);
+  updateTask(Task newTask) async {
+    await repository.updateTask(newTask);
     loadByDay(state.selectedDay);
   }
 
-  createTask(TaskDTO newTask){
-    repository.createTask(newTask);
+  createTask(TaskDTO newTask) async {
+    await repository.createTask(newTask);
     loadByDay(state.selectedDay);
   }
 
-  deleteTask(int id){
-    repository.deleteTaskById(id);
+  deleteTask(int id) async {
+    await repository.deleteTaskById(id);
     loadByDay(state.selectedDay);
   }
 }
