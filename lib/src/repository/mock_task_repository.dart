@@ -43,4 +43,9 @@ class MockTaskRepository implements TaskRepository{
     );
     tasks.add(newTask);
   }
+
+  @override
+  void deleteTaskById(int id) {
+    tasks.removeWhere((element) => element.id == id);
+  }
 }

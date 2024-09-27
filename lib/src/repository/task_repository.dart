@@ -6,4 +6,5 @@ abstract class TaskRepository{
   List<Task> getTasksByDay(DateTime day);
   void updateTask(Task newTask);
   void createTask(TaskDTO newTask);
+  void deleteTaskById(int id);
 }

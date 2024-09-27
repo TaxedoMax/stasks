@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:stasks/src/DTO/TaskDTO.dart';
 import 'package:stasks/src/bloc/task_list_cubit.dart';
+import 'package:stasks/src/widget/task_page/accept_alert_dialog.dart';
 
 import '../entity/task.dart';
 import '../widget/task_page/date_alert_dialog.dart';
@@ -60,7 +61,22 @@ class _TaskPageState extends State<TaskPage>{
     Navigator.of(context).pop();
   }
 
-    void _onAcceptPressed(){
+  void _deleteTask() async {
+    bool? acceptation = await showDialog<bool>(
+        context: context,
+        builder: (context) => const AcceptAlertDialog(
+            title: 'Удаление задачи',
+            text: 'Вы действительно хотите удалить задачу?'
+        )
+    );
+
+    if((acceptation ?? false) && context.mounted){
+      BlocProvider.of<TaskListCubit>(context).deleteTask(widget.task!.id);
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _onAcceptPressed(){
     if(widget.mode == PageMode.edit){
       _editTask();
     }
@@ -129,6 +145,20 @@ class _TaskPageState extends State<TaskPage>{
                     icon: const Icon(Icons.calendar_month)
                 )
               ],
+            ),
+
+            const SizedBox(height: 20),
+
+            Visibility(
+              visible: widget.mode == PageMode.edit,
+              child: TextButton(
+                  onPressed: _deleteTask,
+                  child: const Text('Удалить',
+                    style: TextStyle(
+                      color: Colors.redAccent
+                    ),
+                  )
+              ),
             ),
 
             const Spacer(),
