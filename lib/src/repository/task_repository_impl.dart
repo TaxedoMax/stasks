@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
-import 'package:stasks/src/DTO/TaskDTO.dart';
+import 'package:stasks/src/DTO/task_dto.dart';
 import 'package:stasks/src/entity/task.dart';
 import 'package:stasks/src/repository/task_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -10,7 +9,13 @@ class TaskRepositoryImpl extends TaskRepository{
 
   @override
   Future<void> createTask(TaskDTO newTask) async {
-    Task tmp = Task(-1, newTask.date, newTask.name, newTask.description, false);
+    Task tmp = Task(
+        id: -1,
+        date: newTask.date,
+        name: newTask.name,
+        description: newTask.description,
+        isDone: false
+    );
     int id = await _taskBox.add(tmp);
     await _taskBox.put(id, tmp.copyWith(id: id));
   }

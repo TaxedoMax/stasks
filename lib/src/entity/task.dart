@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'task.g.dart';
 
-//@immutable
+@immutable
 @HiveType(typeId: 0)
 class Task{
   @HiveField(0)
@@ -21,19 +21,31 @@ class Task{
   @HiveField(4)
   final bool isDone;
 
-  const Task(this.id, this.date, this.name, this.description, this.isDone);
+  @HiveField(5)
+  final int? parentId;
+
+  const Task({
+    required this.id,
+    required this.date,
+    required this.name,
+    required this.description,
+    required this.isDone,
+    this.parentId
+  });
 
   Task copyWith({
     int? id,
     DateTime? date,
     String? name,
     String? description,
-    bool? isDone
+    bool? isDone,
+    int? parentId
   })=> Task(
-      id ?? this.id,
-      date ?? this.date,
-      name ?? this.name,
-      description ?? this.description,
-      isDone ?? this.isDone
+      id: id ?? this.id,
+      date: date ?? this.date,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      isDone: isDone ?? this.isDone,
+      parentId: parentId
     );
 }

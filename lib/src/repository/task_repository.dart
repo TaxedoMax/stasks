@@ -1,4 +1,4 @@
-import 'package:stasks/src/DTO/TaskDTO.dart';
+import 'package:stasks/src/DTO/task_dto.dart';
 
 import '../entity/task.dart';
 

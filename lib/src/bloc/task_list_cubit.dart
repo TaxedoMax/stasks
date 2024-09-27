@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stasks/src/DTO/TaskDTO.dart';
+import 'package:stasks/src/DTO/task_dto.dart';
 
 import '../entity/task.dart';
 import '../repository/task_repository.dart';

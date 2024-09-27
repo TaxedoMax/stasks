@@ -1,13 +1,31 @@
-import 'package:stasks/src/DTO/TaskDTO.dart';
+import 'package:stasks/src/DTO/task_dto.dart';
 import 'package:stasks/src/repository/task_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../entity/task.dart';
 
 class MockTaskRepository implements TaskRepository{
+  late int _nextId;
+
+  MockTaskRepository(){
+    _nextId = tasks.length;
+  }
+
   List<Task> tasks = [
-    Task(0, DateTime.now(), 'Задача 1', 'Описание бла бла', false),
-    Task(1, DateTime.now(), 'Задача 2', 'Описание бла бла', false),
+    Task(
+        id: 0,
+        date: DateTime.now(),
+        name: 'Задача 1',
+        description: 'Описание бла бла',
+        isDone: false
+    ),
+    Task(
+        id: 1,
+        date: DateTime.now(),
+        name: 'Задача 2',
+        description: 'Описание бла бла',
+        isDone: false
+    ),
   ];
 
   @override
@@ -35,11 +53,11 @@ class MockTaskRepository implements TaskRepository{
   @override
   Future<void> createTask(TaskDTO newTaskDTO) async {
     Task newTask = Task(
-        tasks.length,
-        newTaskDTO.date,
-        newTaskDTO.name,
-        newTaskDTO.description,
-        false
+        id: tasks.length,
+        date: newTaskDTO.date,
+        name: newTaskDTO.name,
+        description: newTaskDTO.description,
+        isDone: false
     );
     tasks.add(newTask);
   }

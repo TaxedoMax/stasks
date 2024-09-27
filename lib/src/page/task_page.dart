@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:stasks/src/DTO/TaskDTO.dart';
+import 'package:stasks/src/DTO/task_dto.dart';
 import 'package:stasks/src/bloc/task_list_cubit.dart';
 import 'package:stasks/src/widget/task_page/accept_alert_dialog.dart';
 
@@ -126,13 +126,13 @@ class _TaskPageState extends State<TaskPage>{
               textAlign: TextAlign.center,
             ),
 
-            const SizedBox(height: 30),
-
-            const Text('Описание'),
-            TextField(
-              controller: _descriptionController,
-              textAlign: TextAlign.center,
-            ),
+            // const SizedBox(height: 30),
+            //
+            // const Text('Описание'),
+            // TextField(
+            //   controller: _descriptionController,
+            //   textAlign: TextAlign.center,
+            // ),
 
             const SizedBox(height: 30),
 
