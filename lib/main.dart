@@ -14,11 +14,8 @@ void main() async {
 }
 
 void initOverlayStyle(){
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-      systemNavigationBarColor: Color(0x00FFFFFF)
+      systemNavigationBarColor: Color(0xFF000000)
     )
   );
 }

@@ -8,32 +8,49 @@ class TaskListCubit extends Cubit<TaskListState>{
 
   final TaskRepository repository;
 
-  TaskListCubit(this.repository)
-      :super(TaskListState(selectedDay: DateTime.now(), list: []));
+  TaskListCubit(this.repository) :super(TaskListState.initial());
+
+  _emitChanges(DateTime day, TaskListAction type){
+    List<Task> list = repository.getTasksByDay(day);
+    emit(TaskListState(selectedDay: day, list: list, lastAction: type));
+  }
 
   loadByDay(DateTime day){
-    List<Task> list = repository.getTasksByDay(day);
-    emit(TaskListState(selectedDay: day, list: list));
+    _emitChanges(day, TaskListAction.taskListLoaded);
   }
 
   updateTask(Task newTask) async {
     await repository.updateTask(newTask);
-    loadByDay(state.selectedDay);
+    _emitChanges(state.selectedDay, TaskListAction.taskUpdated);
   }
 
   createTask(TaskDTO newTask) async {
     await repository.createTask(newTask);
-    loadByDay(state.selectedDay);
+    _emitChanges(state.selectedDay, TaskListAction.taskCreated);
   }
 
   deleteTask(int id) async {
     await repository.deleteTaskById(id);
-    loadByDay(state.selectedDay);
+    _emitChanges(state.selectedDay, TaskListAction.taskDeleted);
   }
 }
 
 class TaskListState{
   final DateTime selectedDay;
   final List<Task> list;
-  TaskListState({required this.selectedDay, required this.list});
+  final TaskListAction lastAction;
+  TaskListState({required this.selectedDay, required this.list, required this.lastAction});
+
+  factory TaskListState.initial() => TaskListState(
+      selectedDay: DateTime.now(),
+      list: [],
+      lastAction: TaskListAction.taskListLoaded
+  );
+}
+
+enum TaskListAction{
+  taskListLoaded,
+  taskCreated,
+  taskDeleted,
+  taskUpdated,
 }

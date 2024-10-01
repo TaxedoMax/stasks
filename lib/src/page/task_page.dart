@@ -131,6 +131,7 @@ class _TaskPageState extends State<TaskPage>{
               controller: _nameController,
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
+              maxLines: null
             ),
 
             // const SizedBox(height: 30),

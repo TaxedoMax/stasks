@@ -49,12 +49,13 @@ class _TaskItemState extends State<TaskItem>{
 
             const SizedBox(width: 10),
 
-            Text(
-              widget.task.name,
-              style: Theme.of(context).textTheme.bodyLarge
+            Expanded(
+              child: Text(
+                widget.task.name,
+                style: Theme.of(context).textTheme.bodyLarge
+              ),
             ),
-            
-            const Spacer(),
+
 
             IconButton(
               onPressed: _suspendTask,
