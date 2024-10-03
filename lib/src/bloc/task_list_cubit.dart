@@ -12,6 +12,7 @@ class TaskListCubit extends Cubit<TaskListState>{
 
   _emitChanges(DateTime day, TaskListAction type){
     List<Task> list = repository.getTasksByDay(day);
+    list.sort((a, b) => a.compareTo(b));
     emit(TaskListState(selectedDay: day, list: list, lastAction: type));
   }
 

@@ -28,8 +28,9 @@ class _TaskListState extends State<TaskListWidget>{
 
         child: BlocBuilder<TaskListCubit, TaskListState>(
           builder: (context, taskListState) {
-            return ListView.builder(
+            return ListView.separated(
                 padding: const EdgeInsets.all(10),
+                separatorBuilder: (context, index) => const SizedBox(height: 10),
                 itemCount: taskListState.list.length,
                 itemBuilder: (BuildContext context, int index){
                   return TaskItem(task: taskListState.list[index]);

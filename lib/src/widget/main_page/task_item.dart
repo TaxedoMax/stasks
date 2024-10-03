@@ -52,7 +52,9 @@ class _TaskItemState extends State<TaskItem>{
             Expanded(
               child: Text(
                 widget.task.name,
-                style: Theme.of(context).textTheme.bodyLarge
+                style: widget.task.isDone
+                    ? Theme.of(context).textTheme.bodyLarge?.copyWith(decoration: TextDecoration.lineThrough)
+                    : Theme.of(context).textTheme.bodyLarge
               ),
             ),
 

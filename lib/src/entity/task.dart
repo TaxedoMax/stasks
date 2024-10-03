@@ -24,6 +24,19 @@ class Task{
   @HiveField(5)
   final int? parentId;
 
+  int compareTo(Task task){
+    int result;
+    if(isDone == task.isDone){
+      result = 0;
+    } else if(isDone){
+      result = 1;
+    } else{
+      result = 0;
+    }
+
+    return result;
+  }
+
   const Task({
     required this.id,
     required this.date,
