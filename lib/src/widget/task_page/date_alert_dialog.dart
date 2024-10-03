@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stasks/src/bloc/calendar_cubit.dart';
+import 'package:stasks/src/repository/task_repository_impl.dart';
 import 'package:stasks/src/widget/global/calendar_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -18,7 +19,7 @@ class _DateAlertDialogState extends State<DateAlertDialog>{
   Widget build(BuildContext context) {
     return BlocProvider<CalendarCubit>(
       create: (context)
-        => CalendarCubit(widget.oldSelectedDate, CalendarFormat.month),
+        => CalendarCubit(widget.oldSelectedDate, CalendarFormat.month, TaskRepositoryImpl()),
 
       child: Builder(
         builder: (context) {

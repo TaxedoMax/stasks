@@ -40,14 +40,14 @@ class _MainPageState extends State<MainPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(title: const Text("STasks")),
 
       body: MultiBlocProvider(
           providers: [
             BlocProvider<CalendarCubit>(
               create: (BuildContext context)
-                => CalendarCubit(DateTime.now(), CalendarFormat.week),
+                => CalendarCubit(DateTime.now(), CalendarFormat.week, TaskRepositoryImpl()),
             ),
 
             BlocProvider<TaskListCubit>(

@@ -2,11 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../entity/task.dart';
+import '../repository/task_repository.dart';
+
 class CalendarCubit extends Cubit<CalendarState>{
   final DateTime focusedDay;
   final CalendarFormat calendarFormat;
+  final TaskRepository _taskRepository;
 
-  CalendarCubit(this.focusedDay, this.calendarFormat)
+  CalendarCubit(this.focusedDay, this.calendarFormat, this._taskRepository)
       :super(CalendarState.initial(focusedDay, calendarFormat));
 
   selectDay(DateTime selectedDay, DateTime focusedDay) {
@@ -19,6 +23,10 @@ class CalendarCubit extends Cubit<CalendarState>{
   changeFormat(CalendarFormat format){
     CalendarState newState = state.copyWith(calendarFormat: format);
     emit(newState);
+  }
+
+  List<Task> getTasksByDay(DateTime day){
+    return _taskRepository.getTasksByDay(day);
   }
 }
 
