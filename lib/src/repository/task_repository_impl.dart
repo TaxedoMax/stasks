@@ -45,4 +45,15 @@ class TaskRepositoryImpl extends TaskRepository{
     await _taskBox.put(newTask.id, newTask);
   }
 
+  @override
+  List<Task> getAll() {
+    List<Task> list = [];
+
+    for(int i = 0; i < _taskBox.length; i++){
+      list.add(_taskBox.getAt(i)!);
+    }
+
+    return list;
+  }
+
 }

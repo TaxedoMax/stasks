@@ -35,6 +35,10 @@ class TaskListCubit extends Cubit<TaskListState>{
     await _taskUseCase.deleteTaskById(id);
     _emitChanges(state.selectedDay, TaskListAction.taskDeleted);
   }
+
+  shiftOutdatedTasks(DateTime day){
+    _taskUseCase.shiftOutdatedTasks(day);
+  }
 }
 
 class TaskListState{

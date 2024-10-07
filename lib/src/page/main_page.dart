@@ -53,6 +53,7 @@ class _MainPageState extends State<MainPage>{
             BlocProvider<TaskListCubit>(
               create: (BuildContext context) =>
                 TaskListCubit()
+                  ..shiftOutdatedTasks(context.read<CalendarCubit>().state.focusedDay)
                   ..loadByDay(context.read<CalendarCubit>().state.focusedDay)
             )
           ],

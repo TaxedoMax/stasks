@@ -66,4 +66,10 @@ class MockTaskRepository implements TaskRepository{
   Future<void> deleteTaskById(int id) async {
     tasks.removeWhere((element) => element.id == id);
   }
+
+  @override
+  List<Task> getAll() {
+    // TODO: implement getAllTasks
+    throw UnimplementedError();
+  }
 }
