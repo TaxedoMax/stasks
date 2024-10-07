@@ -26,9 +26,13 @@ class _TaskPageState extends State<TaskPage>{
   late DateTime _date;
 
   void _dialogUpdateDate() async {
+    TaskListCubit cubit = BlocProvider.of<TaskListCubit>(context);
     DateTime? date = await showDialog<DateTime>(
         context: context,
-        builder: (context) => DateAlertDialog(oldSelectedDate: _date)
+        builder: (context) => BlocProvider.value(
+            value: cubit,
+            child: DateAlertDialog(oldSelectedDate: _date)
+        )
     );
 
     if(date != null){
