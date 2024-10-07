@@ -1,17 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:stasks/src/DTO/task_dto.dart';
+import 'package:stasks/src/use_case/task_use_case.dart';
 
 import '../entity/task.dart';
-import '../repository/task_repository.dart';
 
 class TaskListCubit extends Cubit<TaskListState>{
 
-  final TaskRepository repository;
+  final TaskUseCase _taskUseCase = GetIt.I.get<TaskUseCase>();
 
-  TaskListCubit(this.repository) :super(TaskListState.initial());
+  TaskListCubit() :super(TaskListState.initial());
 
   _emitChanges(DateTime day, TaskListAction type){
-    List<Task> list = repository.getTasksByDay(day);
+    List<Task> list = _taskUseCase.getTasksByDay(day);
     list.sort((a, b) => a.compareTo(b));
     emit(TaskListState(selectedDay: day, list: list, lastAction: type));
   }
@@ -21,17 +22,17 @@ class TaskListCubit extends Cubit<TaskListState>{
   }
 
   updateTask(Task newTask) async {
-    await repository.updateTask(newTask);
+    await _taskUseCase.updateTask(newTask);
     _emitChanges(state.selectedDay, TaskListAction.taskUpdated);
   }
 
   createTask(TaskDTO newTask) async {
-    await repository.createTask(newTask);
+    await _taskUseCase.createTask(newTask);
     _emitChanges(state.selectedDay, TaskListAction.taskCreated);
   }
 
   deleteTask(int id) async {
-    await repository.deleteTaskById(id);
+    await _taskUseCase.deleteTaskById(id);
     _emitChanges(state.selectedDay, TaskListAction.taskDeleted);
   }
 }

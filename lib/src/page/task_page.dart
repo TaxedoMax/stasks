@@ -133,6 +133,7 @@ class _TaskPageState extends State<TaskPage>{
 
             TextField(
               controller: _nameController,
+              textCapitalization: TextCapitalization.sentences,
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
               maxLines: null
