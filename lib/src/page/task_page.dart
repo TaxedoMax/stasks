@@ -49,7 +49,7 @@ class _TaskPageState extends State<TaskPage>{
       date: _date
     );
 
-    BlocProvider.of<TaskListCubit>(context).updateTask(newTask);
+    BlocProvider.of<TaskListCubit>(context).updateTaskContent(newTask);
 
     Navigator.of(context).pop();
   }

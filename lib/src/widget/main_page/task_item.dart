@@ -19,7 +19,7 @@ class _TaskItemState extends State<TaskItem>{
   _suspendTask(){
     DateTime newDate = widget.task.date.add(const Duration(days: 1));
     Task newTask = widget.task.copyWith(date: newDate);
-    BlocProvider.of<TaskListCubit>(context).updateTask(newTask);
+    BlocProvider.of<TaskListCubit>(context).updateTaskContent(newTask);
   }
 
   _editTask(){
@@ -44,7 +44,7 @@ class _TaskItemState extends State<TaskItem>{
                 value: widget.task.isDone,
                 onChanged: (isDone) => BlocProvider
                     .of<TaskListCubit>(context)
-                    .updateTask(widget.task.copyWith(isDone: isDone)),
+                    .updateTaskContent(widget.task.copyWith(isDone: isDone)),
             ),
 
             const SizedBox(width: 10),

@@ -24,6 +24,9 @@ class Task{
   @HiveField(5)
   final int? parentId;
 
+  @HiveField(6, defaultValue: -1)
+  final int position;
+
   int compareTo(Task task){
     int result;
     if(isDone == task.isDone){
@@ -43,7 +46,8 @@ class Task{
     required this.name,
     required this.description,
     required this.isDone,
-    this.parentId
+    required this.position,
+    this.parentId,
   });
 
   Task copyWith({
@@ -52,6 +56,7 @@ class Task{
     String? name,
     String? description,
     bool? isDone,
+    int? position,
     int? parentId
   })=> Task(
       id: id ?? this.id,
@@ -59,6 +64,7 @@ class Task{
       name: name ?? this.name,
       description: description ?? this.description,
       isDone: isDone ?? this.isDone,
+      position: position ?? this.position,
       parentId: parentId
     );
 }

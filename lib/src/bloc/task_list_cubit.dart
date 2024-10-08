@@ -13,7 +13,7 @@ class TaskListCubit extends Cubit<TaskListState>{
 
   _emitChanges(DateTime day, TaskListAction type){
     List<Task> list = _taskUseCase.getTasksByDay(day);
-    list.sort((a, b) => a.compareTo(b));
+    list.sort((a, b) => a.position.compareTo(b.position));
     emit(TaskListState(selectedDay: day, list: list, lastAction: type));
   }
 
@@ -21,8 +21,13 @@ class TaskListCubit extends Cubit<TaskListState>{
     _emitChanges(day, TaskListAction.taskListLoaded);
   }
 
-  updateTask(Task newTask) async {
-    await _taskUseCase.updateTask(newTask);
+  updateTaskContent(Task newTask) async {
+    await _taskUseCase.updateTaskContent(newTask);
+    _emitChanges(state.selectedDay, TaskListAction.taskUpdated);
+  }
+
+  updateTaskPosition(Task newTask) async {
+    await _taskUseCase.updateTaskPosition(newTask);
     _emitChanges(state.selectedDay, TaskListAction.taskUpdated);
   }
 
