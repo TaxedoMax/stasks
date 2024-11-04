@@ -26,9 +26,13 @@ class _TaskPageState extends State<TaskPage>{
   late DateTime _date;
 
   void _dialogUpdateDate() async {
+    TaskListCubit cubit = BlocProvider.of<TaskListCubit>(context);
     DateTime? date = await showDialog<DateTime>(
         context: context,
-        builder: (context) => DateAlertDialog(oldSelectedDate: _date)
+        builder: (context) => BlocProvider.value(
+            value: cubit,
+            child: DateAlertDialog(oldSelectedDate: _date)
+        )
     );
 
     if(date != null){
@@ -45,7 +49,7 @@ class _TaskPageState extends State<TaskPage>{
       date: _date
     );
 
-    BlocProvider.of<TaskListCubit>(context).updateTask(newTask);
+    BlocProvider.of<TaskListCubit>(context).updateTaskContent(newTask);
 
     Navigator.of(context).pop();
   }
@@ -128,7 +132,10 @@ class _TaskPageState extends State<TaskPage>{
             const SizedBox(height: 10),
 
             TextField(
+              keyboardType: TextInputType.text,
+              onSubmitted: (value) => _onAcceptPressed(),
               controller: _nameController,
+              textCapitalization: TextCapitalization.sentences,
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
               maxLines: null

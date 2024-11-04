@@ -19,7 +19,7 @@ class _TaskItemState extends State<TaskItem>{
   _suspendTask(){
     DateTime newDate = widget.task.date.add(const Duration(days: 1));
     Task newTask = widget.task.copyWith(date: newDate);
-    BlocProvider.of<TaskListCubit>(context).updateTask(newTask);
+    BlocProvider.of<TaskListCubit>(context).updateTaskContent(newTask);
   }
 
   _editTask(){
@@ -38,36 +38,42 @@ class _TaskItemState extends State<TaskItem>{
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        child: Row(
+        child: Column(
           children: [
-            Checkbox(
-                value: widget.task.isDone,
-                onChanged: (isDone) => BlocProvider
-                    .of<TaskListCubit>(context)
-                    .updateTask(widget.task.copyWith(isDone: isDone)),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Checkbox(
+                    value: widget.task.isDone,
+                    onChanged: (isDone) => BlocProvider
+                        .of<TaskListCubit>(context)
+                        .updateTaskContent(widget.task.copyWith(isDone: isDone)),
+                ),
+
+                const SizedBox(width: 10),
+
+                Expanded(
+                  child: Text(
+                    widget.task.name,
+                    style: widget.task.isDone
+                        ? Theme.of(context).textTheme.bodyLarge?.copyWith(decoration: TextDecoration.lineThrough)
+                        : Theme.of(context).textTheme.bodyLarge
+                  ),
+                ),
+
+
+                IconButton(
+                  onPressed: _suspendTask,
+                  icon: const Icon(Icons.more_time)
+                ),
+
+                IconButton(
+                  onPressed: _editTask,
+                  icon: const Icon(Icons.edit)
+                )
+              ],
             ),
-
-            const SizedBox(width: 10),
-
-            Expanded(
-              child: Text(
-                widget.task.name,
-                style: widget.task.isDone
-                    ? Theme.of(context).textTheme.bodyLarge?.copyWith(decoration: TextDecoration.lineThrough)
-                    : Theme.of(context).textTheme.bodyLarge
-              ),
-            ),
-
-
-            IconButton(
-              onPressed: _suspendTask,
-              icon: const Icon(Icons.more_time)
-            ),
-
-            IconButton(
-              onPressed: _editTask,
-              icon: const Icon(Icons.edit)
-            )
+            const SizedBox(height: 10)
           ],
         )
     );

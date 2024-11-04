@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:stasks/service_locator.dart';
 import 'package:stasks/src/entity/task.dart';
 import 'package:stasks/src/page/main_page.dart';
 import 'package:stasks/src/style/default_text_theme.dart';
+import 'package:stasks/src/use_case/task_use_case.dart';
 
 void main() async {
   await initHive();
   initOverlayStyle();
+  initServiceLocator();
+  await GetIt.I.get<TaskUseCase>().migrateData();
+  await GetIt.I.get<TaskUseCase>().shiftOutdatedTasks(DateTime.now());
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 

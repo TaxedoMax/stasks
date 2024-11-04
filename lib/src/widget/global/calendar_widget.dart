@@ -47,6 +47,8 @@ class _CalendarWidgetState extends State<CalendarWidget>{
             focusedDay: calendarState.focusedDay,
             calendarFormat: calendarState.calendarFormat,
 
+            pageJumpingEnabled: true,
+
             eventLoader: _eventLoader,
             selectedDayPredicate: (day) => isSameDay(calendarState.focusedDay, day),
 
