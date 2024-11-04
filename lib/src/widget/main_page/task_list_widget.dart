@@ -55,10 +55,20 @@ class _TaskListState extends State<TaskListWidget>{
 
                 children: <Widget>[
                   for(int index = 0; index < taskListState.list.length; index++)
-                    ReorderableDragStartListener(
+                    Stack(
                       key: Key(index.toString()),
-                      index: index,
-                      child: TaskItem(task: taskListState.list[index]),
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        TaskItem(task: taskListState.list[index]),
+                        Positioned(
+                          width: MediaQuery.of(context).size.width / 3,
+                          height: MediaQuery.of(context).size.height,
+                          child: ReorderableDragStartListener(
+                              index: index,
+                              child: const ColoredBox(color: Color.fromARGB(0, 0, 0, 0))
+                          ),
+                        ),
+                      ],
                     )
                 ],
             );

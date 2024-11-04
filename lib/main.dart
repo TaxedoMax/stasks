@@ -15,6 +15,7 @@ void main() async {
   initOverlayStyle();
   initServiceLocator();
   await GetIt.I.get<TaskUseCase>().migrateData();
+  await GetIt.I.get<TaskUseCase>().shiftOutdatedTasks(DateTime.now());
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 

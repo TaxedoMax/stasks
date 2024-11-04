@@ -132,6 +132,8 @@ class _TaskPageState extends State<TaskPage>{
             const SizedBox(height: 10),
 
             TextField(
+              keyboardType: TextInputType.text,
+              onSubmitted: (value) => _onAcceptPressed(),
               controller: _nameController,
               textCapitalization: TextCapitalization.sentences,
               style: Theme.of(context).textTheme.bodyLarge,

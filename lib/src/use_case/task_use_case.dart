@@ -10,9 +10,11 @@ class TaskUseCase{
 
   Future<void> migrateData() async {
     List<Task> tasks = _taskRepository.getAll();
+    List<DateTime> migratedDays = [];
     for(var task in tasks){
-      if(task.position == -1){
+      if(migratedDays.indexWhere((element) => element.compareWithoutTime(task.date) == 0) == -1){
         List<Task> thisDay = _taskRepository.getTasksByDay(task.date);
+        migratedDays.add(task.date);
         await _migrateDay(thisDay);
       }
     }
